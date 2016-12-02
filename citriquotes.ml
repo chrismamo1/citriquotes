@@ -1,21 +1,23 @@
 open Lwt
 open Opium.Std
 
+type person =
+  { name : string
+  ; quotes : string list
+  }
+[@@deriving yojson]
+
 module List = struct
   include List
 
   let get_first ls n =
     let rec aux n = function
       | [] -> []
-      | hd :: _ when n = 0 -> [hd]
+      | hd :: _ when n = 0 -> []
       | hd :: tl ->
           hd :: aux (n - 1) tl
     in
     aux n ls
-
-  let rec to_string = function
-    | [] -> ""
-    | hd :: tl -> hd ^ "\n" ^ to_string tl
 end
 
 let quotes_db = Hashtbl.create 16
@@ -49,8 +51,6 @@ let load_quotes datadir name =
     match quote with
       | None -> Lwt.return []
       | Some quote -> begin
-          Lwt_io.printf "found a quote \"%s\"\n" quote
-          >>= fun () ->
           match String.trim quote with
             | "" -> aux ()
             | quote ->
@@ -67,8 +67,6 @@ let load_quotes datadir name =
 let load_all_quotes datadir =
   load_index datadir
   >>= fun index ->
-  Lwt_io.printf "Index: \n\"%s\"\n" (List.to_string index)
-  >>= fun () ->
   let rec aux = function
     | name :: names ->
         load_quotes datadir name
@@ -81,20 +79,33 @@ let load_all_quotes datadir =
 
 let get_quote = get "/quotes/:name" (fun req ->
   let name = param req "name" |> String.trim in
-  Lwt_io.printf "Trying to get quotes from %s\n" name
-  >>= fun () ->
-  let quotes =
-    try
-      Hashtbl.find quotes_db name
-    with
-      | Not_found ->
-          []
+  let count =
+    Uri.get_query_param
+      (req.request
+        |> Cohttp_lwt.Request.uri)
+      "count"
+    |> function
+        | Some x -> Some (int_of_string x)
+        | None -> None
   in
   let quotes =
-    [%to_yojson: string list] quotes
-    |> Yojson.Safe.to_string
+    Hashtbl.fold
+      (fun k v acc ->
+        if k = name || name = "*"
+        then
+          let v =
+            match count with
+              | Some count -> List.get_first v count
+              | None -> v
+          in
+          Yojson.Safe.(k, [%to_yojson: string list] v) :: acc
+        else
+          acc)
+      quotes_db
+      []
+    |> fun x -> `Assoc x
   in
-  `String (quotes)
+  `String (Yojson.Safe.to_string quotes)
   |> respond')
 
 let _ =
