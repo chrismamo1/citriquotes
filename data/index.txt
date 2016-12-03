@@ -1,4 +1,3 @@
-Akhilesh Yarabarla
 Edsger Dijkstra
 The French
 Donald Knuth
