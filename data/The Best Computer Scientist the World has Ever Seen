@@ -4,14 +4,14 @@ Write all your code in FØRTRAN. If your boss ask why, you can reply that there 
 Convert all common utility functions into asm.
 Sprinkle your code with bits of inline assembler just for fun. Almost no one understands assembler anymore. Even a few lines of it can stop a maintenance programmer cold.
 Regexes are notoriously hard to proofread and debug. Use them copiously, the longer and more convoluted the better.
-About 20% of these techniques can’t be used in Ada. Refuse to use Ada. If your manager presses you, insist that no-one else uses it and point out that it doesn’t work with your large suite of tools like lint and plummer that work around C’s failings.
+About 20% of these techniques can't be used in Ada. Refuse to use Ada. If your manager presses you, insist that no-one else uses it and point out that it doesn't work with your large suite of tools like lint and plummer that work around C's failings.
 Everyone knows that debugging your dynamic storage is complicated and time consuming. Instead of making sure each class has no storage leaks, reinvent your own storage allocator.
 Instead of freeing storage, force your users to periodically perform a system reset that clears the heap.
 If you call your variables a, b, c, then it will be impossible to search for instances of them using a simple text editor. Further, nobody will be able to guess what they are for. If anyone even hints at breaking the tradition honoured since FØRTRAN of using i, j and k for indexing variables, namely replacing them with ii, jj and kk, warn them about what the Spanish Inquisition did to heretics.
 In naming functions and variables, make heavy use of abstract words like it, everything, data, handle, stuff, do, routine, perform and the digits e.g. routineX48, PerformDataFunction, DoIt, HandleStuff and do_args_method.
 A VAX/VMS (Virtual Address Extension/Virtual Memory System) script kept track of the statii returned from various Vaxen. Esperanto, Klingon qualifies as languages for these purposes. For pseudo-Esperanto pluraloj, add oj. You will be doing your part toward world peace.
 Randomly capitalize the first letter of a syllable in the middle of a word. For example: ComputeRasterHistoGram().
-Use accented characters on variable names, e. g. "typedef struct { int i; } ínt;" where the second ínt’s í is actually i-acute. With only a simple text editor, it’s nearly impossible to distinguish the slant of the accent mark.
+Use accented characters on variable names, e. g. "typedef struct { int i; } ínt;" where the second ínt's í is actually i-acute. With only a simple text editor, it's nearly impossible to distinguish the slant of the accent mark.
 Randomly intersperse two languages (human or computer). If your boss insists you use his language, tell him you can organise your thoughts better in your own language, or, if that does not work, allege linguistic discrimination and threaten to sue your employers for a vast sum.
 Extended ASCII characters are perfectly valid as variable names, including ß, Ð and ñ characters. They are almost impossible to type without copying/pasting in a simple text editor.
 Choose variable names that masquerade as mathematical operators, e.g.: "openParen = ( slash + asterix ) / equals;"

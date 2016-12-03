@@ -4,3 +4,4 @@ Donald Knuth
 The Best Computer Scientist the World has Ever Seen
 Gerald Weinberg
 Napoleon Bonaparte
+Etienne Millon
